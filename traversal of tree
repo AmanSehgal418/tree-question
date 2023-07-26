@@ -1,3 +1,4 @@
+Recursive:-
 class Solution {
     // Function to find the inorder traversal of the tree.
     void inorderUtil(Node root, ArrayList<Integer> res) {
@@ -14,8 +15,7 @@ class Solution {
         // then we call the recursive function for right subtree.
         inorderUtil(root.right, res);
     }
-
-    // Function to return a list containing the inorder traversal of the tree.
+ // Function to return a list containing the inorder traversal of the tree.
     ArrayList<Integer> inOrder(Node root) {
         ArrayList<Integer> res = new ArrayList<Integer>(0);
         inorderUtil(root, res);
@@ -24,6 +24,27 @@ class Solution {
     }
 }
 
+Iterative:-
+ static ArrayList < Integer > inOrderTrav(Node curr) {
+        ArrayList < Integer > inOrder = new ArrayList < > ();
+        Stack < Node > s = new Stack < > ();
+        while (true) {
+            if (curr != null) {
+                s.push(curr);
+                curr = curr.left;
+            } else {
+                if (s.isEmpty()) break;
+                curr = s.peek();
+                inOrder.add(curr.data);
+                s.pop();
+                curr = curr.right;
+            }
+        }
+        return inOrder;
+    }
+
+
+Recursive:-
 class BinaryTree
 {
     static void preOrderTrav(Node curr, ArrayList < Integer > preOrder) {
@@ -44,3 +65,26 @@ class BinaryTree
     }
 
 }
+
+iterative:-
+static ArrayList < Integer > preOrderTrav(Node curr) {
+        ArrayList < Integer > preOrder = new ArrayList < Integer > ();
+        if (curr == null)
+            return preOrder;
+
+        Stack < Node > s = new Stack < > ();
+        s.push(curr);
+
+        while (!s.isEmpty()) {
+            Node topNode = s.peek();
+            preOrder.add(topNode.data);
+            s.pop();
+            if (topNode.right != null)
+                s.push(topNode.right);
+            if (topNode.left != null)
+                s.push(topNode.left);
+        }
+        return preOrder;
+
+    }
+
