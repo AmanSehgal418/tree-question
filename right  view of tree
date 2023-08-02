@@ -1,0 +1,23 @@
+class Solution{
+    //Function to return list containing elements of right view of binary tree.
+    ArrayList<Integer> rightView(Node node) {
+        
+         ArrayList<Integer> ans = new ArrayList<Integer>();
+        rightSideView(node, ans, 0);
+        return ans;
+    }
+    
+    public void rightSideView(Node node, ArrayList<Integer> ans, int currDepth){
+        if(node == null){
+            return;
+        }
+        if(currDepth == ans.size()){
+            ans.add(node.data);
+        }
+        
+        rightSideView(node.right, ans, currDepth + 1);
+        rightSideView(node.left, ans, currDepth + 1);
+        
+    }
+}
+    
