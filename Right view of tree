@@ -1,0 +1,43 @@
+
+
+//User function Template for Java
+
+/* A Binary Tree node
+class Node
+{
+    int data;
+    Node left, right;
+
+    Node(int item)
+    {
+        data = item;
+        left = right = null;
+    }
+}*/
+class Tree
+{
+    //Function to return list containing elements of left view of binary tree.
+    public ArrayList<Integer> leftView(Node root)
+    {
+      ArrayList<Integer> ans = new ArrayList<Integer>();
+        leftSideView(root, ans, 0);
+        return ans;
+    }
+    
+    public void leftSideView(Node root, ArrayList<Integer> list, int currDepth){
+        if(root == null){
+            return;
+        }
+        if(currDepth == list.size()){
+            list.add(root.data);
+        }
+        
+        leftSideView(root.left, list, currDepth + 1);
+        leftSideView(root.right, list, currDepth + 1);
+        
+    }
+  
+}
+
+
+
