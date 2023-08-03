@@ -3,6 +3,7 @@ class Tree
     //Function to check whether a binary tree is balanced or not.
     boolean isBalanced(Node root)
     {
+        //int to boolean conversion
 	  return dfsHeight (root) != -1;
     }
     
