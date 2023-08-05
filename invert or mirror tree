@@ -1,0 +1,53 @@
+class Solution {
+    // Function to convert a binary tree into its mirror tree.
+    void mirror(Node node) {
+        
+        if (node == null)
+            return;
+ 
+        Queue<Node> q = new LinkedList<>();
+        q.add(node);
+ 
+        // Do BFS. While doing BFS, keep swapping
+        // left and right children
+        while (q.size() > 0) {
+            // pop top node from queue
+            Node curr = q.peek();
+            q.remove();
+ 
+            // swap left child with right child
+            Node temp = curr.left;
+            curr.left = curr.right;
+            curr.right = temp;
+ 
+            // push left and right children
+            if (curr.left != null)
+                q.add(curr.left);
+            if (curr.right != null)
+                q.add(curr.right);
+                
+        }
+
+    }
+        
+}    
+
+Or
+
+class Solution {
+      Node root;
+ 
+    void mirror() { mirror(root); }
+    Node mirror(Node node){
+         
+         if(node == null)
+         return null;
+         
+         Node temp = node.left;
+         node.left = mirror(node.right);
+         node.right = mirror(temp);
+         
+         return node;
+         
+    }
+}
