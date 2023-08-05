@@ -110,3 +110,5 @@ class BinaryTree
         printSingles(node.left);
     }
 }
+
+TC = O(N)
