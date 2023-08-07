@@ -1,0 +1,50 @@
+class Solution{
+    
+    public ArrayList<Node> nodesAtOddLevels(Node root)
+    {
+        ArrayList<Node> oddNodes = new ArrayList<Node>();
+        nodesAtOddLevelsUtil(root,1,oddNodes);
+        return oddNodes;
+    }
+    
+    public void nodesAtOddLevelsUtil(Node root,int l,ArrayList<Node> oddNodes){
+        if(root==null)
+        {
+            return;
+        }
+        if(l%2==1){
+            oddNodes.add(root);
+        }
+        nodesAtOddLevelsUtil(root.left,l+1,oddNodes);
+        nodesAtOddLevelsUtil(root.right,l+1,oddNodes);
+    }
+}
+
+OR
+
+static void printOddNodes(Node root, boolean isOdd)
+{
+    // If empty tree
+    if (root == null)
+    return;
+ 
+    // If current node is of odd level
+    if (isOdd == true)
+    System.out.print(root.data + " ");
+ 
+    // Recur for children with isOdd
+    // switched.
+    printOddNodes(root.left, !isOdd);
+    printOddNodes(root.right, !isOdd);
+}
+ 
+// Utility method to create a node
+static Node newNode(int data)
+{
+    Node node = new Node();
+    node.data = data;
+    node.left = null;
+    node.right = null;
+    return (node);
+}
+ 
