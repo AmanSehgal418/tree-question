@@ -1,0 +1,42 @@
+class Tree
+{
+    // Return the level (0-indexed) with maximum number of nodes.
+    public static int maxNodeLevel(Node root)
+    {
+        if(root == null)
+          return -1;
+          
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        
+        int curr_level = 0;
+        int max = Integer.MIN_VALUE;
+        int level_no = 0; //to br return having max nodes
+        
+        while(true){
+            int Nodecount = q.size(); // count node in a level
+            
+            if(Nodecount == 0)
+              break;
+              
+            if(Nodecount > max){
+                max = Nodecount;
+                level_no = curr_level;
+            }
+              
+            while(Nodecount > 0){
+                Node node = q.peek();
+                q.remove();
+                if(node.left != null)
+                 q.add(node.left);
+                if(node.right != null)
+                 q.add(node.right);
+                 
+                Nodecount--;
+            
+            }
+            curr_level++;
+        }
+        return level_no;
+    }
+}
