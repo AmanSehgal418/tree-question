@@ -1,0 +1,60 @@
+public class Solution {
+    public int[] solve(TreeNode A) {
+        List<Integer> resp = new ArrayList<Integer>();
+
+        List<TreeNode> currentLevel = new ArrayList<TreeNode>();
+        currentLevel.add(A);
+        while (!currentLevel.isEmpty()) {
+            List<TreeNode> nextLevel = new ArrayList<TreeNode>();
+            for (TreeNode n : currentLevel) {
+                while (n != null) {
+                    resp.add(n.val);
+                    if (n.left != null)
+                        nextLevel.add(n.left);
+                    n = n.right;
+                }
+            }
+            currentLevel = nextLevel;
+        }
+        int[] r = new int[resp.size()];
+        for (int i=0; i<resp.size(); i++) {
+            r[i] = resp.get(i);
+        }
+        return r;
+    }
+}
+
+OR
+
+public class Solution {
+    Map<Integer, ArrayList<Integer>> map;
+    public ArrayList<Integer> diagonal(Node root) {
+        map = new TreeMap<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+        verticalorder(root, 0);
+        for(Map.Entry<Integer, ArrayList<Integer>> e : map.entrySet()){
+            for(int i : e.getValue()){
+                ans.add(i);
+            }
+        }
+      return ans;
+    }    
+        
+        
+     public void verticalorder(Node node, int hd){
+            if(root == null)
+            return;
+
+            ArrayList<Integer> ans = map.get(hd);
+            if(ans == null){
+                ans = new ArrayList<>();
+                ans.add(node.val);
+            }else{
+            ans.add(node.val);
+            }
+            map.put(hd, ans);        
+            
+            verticalorder(node.left, hd+1);
+            verticalorder(node.right, hd);
+        }    
+}
