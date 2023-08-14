@@ -1,0 +1,53 @@
+public class Solution {
+	TreeNode prev = null;
+	public TreeNode flatten(TreeNode a) {
+		TreeNode cur = a;
+		while (cur!=null)
+		{
+			if(cur.left!=null)
+			{
+				TreeNode prev = cur.left;
+				while(prev.right!=null)
+				{
+					prev = prev.right;
+				}
+				prev.right = cur.right;
+				cur.right = cur.left;
+				cur.left = null;
+			}
+			cur = cur.right;
+		}
+		return a;
+    }
+}
+
+Time Complexity: O(N)
+
+Reason: Time complexity will be the same as that of a morris traversal
+
+Space Complexity: O(1)
+
+Reason: We are not using any extra space.
+
+Recursion:-
+public class Solution {
+  static Node prev = null;
+    static void flatten(Node  root) {
+      if (root == null) return;
+
+      flatten(root . right);
+      flatten(root . left);
+
+      root . right = prev;
+      root . left = null;
+      prev = root;
+    }
+}
+
+Time Complexity: O(N)
+
+Reason: We are doing a simple preorder traversal.
+
+Space Complexity: O(N)
+
+Reason: Worst case time complexity will be O(N) (in case of skewed tree).
