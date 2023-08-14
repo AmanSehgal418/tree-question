@@ -1,0 +1,15 @@
+public class Solution {
+    public TreeNode solve(TreeNode A, TreeNode B) {
+        /* Method to merge given two binary trees*/
+        if(A == null && B == null)
+           return null;
+         if (A == null)
+             return B;
+         if (B == null)
+             return A;
+         TreeNode node = new TreeNode(A.val + B.val);
+         node.left = solve(A.left, B.left);
+         node.right = solve(A.right, B.right);
+         return node;
+     }
+    }
