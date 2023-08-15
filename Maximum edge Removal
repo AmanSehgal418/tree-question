@@ -1,0 +1,139 @@
+import java.util.*;
+class GFG
+{
+     
+// graph
+static Vector<Vector<Integer>> g = new Vector<Vector<Integer>>();
+ 
+static int res;
+ 
+// Utility method to do DFS of the graph and count edge
+// deletion for even forest
+static int dfs( int u, boolean visit[])
+{
+    visit[u] = true;
+    int currComponentNode = 0;
+ 
+    // iterate over all neighbor of node u
+    for (int i = 0; i < g.get(u).size(); i++)
+    {
+        int v = g.get(u).get(i);
+        if (!visit[v])
+        {
+            // Count the number of nodes in a subtree
+            int subtreeNodeCount = dfs(v, visit);
+ 
+            // if returned node count is even, disconnect
+            // the subtree and increase result by one.
+            if (subtreeNodeCount % 2 == 0)
+                res++;
+ 
+            // else add subtree nodes in current component
+            else
+                currComponentNode += subtreeNodeCount;
+        }
+    }
+ 
+    // number of nodes in current component and one for
+    // current node
+    return (currComponentNode + 1);
+}
+ 
+/* method returns max edge that we can remove, after which
+    each connected component will have even number of
+    vertices */
+static int maxEdgeRemovalToMakeForestEven( int N)
+{
+    // Create a visited array for DFS and make all nodes
+    // unvisited in starting
+    boolean visit[]=new boolean[N + 1];
+    for (int i = 0; i <= N; i++)
+        visit[i] = false;
+ 
+    res = 0; // Passed as reference
+ 
+    // calling the dfs from node-0
+    dfs(0, visit);
+ 
+    return res;
+}
+ 
+// Utility function to add an undirected edge (u,v)
+static void addEdge( int u, int v)
+{
+    g.get(u).add(v);
+    g.get(v).add(u);
+}
+ 
+// Driver code to test above methods
+public static void main(String args[])
+{
+    int edges[][] = {{0, 2}, {0, 1}, {0, 4},
+                    {2, 3}, {4, 5}, {5, 6},
+                    {5, 7}};
+    int N = edges.length;
+     
+    for (int i = 0; i < N+1; i++)
+    g.add(new Vector<Integer>());
+     
+    for (int i = 0; i < N; i++)
+        addEdge( edges[i][0], edges[i][1]);
+         
+ 
+    System.out.println(maxEdgeRemovalToMakeForestEven( N));
+}
+}
+
+OR
+
+public class Solution {
+    ArrayList<ArrayList<Integer>> graph;
+    int ans;
+    public int solve(int A, ArrayList<ArrayList<Integer>> B) {
+        graph = new ArrayList<>();
+        
+        for(int i = 0; i <= A; i++)
+            graph.add(new ArrayList<>());
+            
+        // Make the Tree
+        for(ArrayList<Integer> edge : B)
+        {
+            graph.get(edge.get(0)).add(edge.get(1));
+            graph.get(edge.get(1)).add(edge.get(0));
+        }
+        
+        boolean vis[] = new boolean[A + 1];
+        ans = 0;
+        dfs(1, vis);
+        return ans;
+    }
+    
+    
+    //dfs function to count the edge removel
+    int dfs(int start, boolean vis[])
+    {
+        vis[start] = true;
+        int currCount = 0;
+        
+        
+        //call dfs for the current node's neighbours
+        for(int neigh : graph.get(start))
+        {
+            if(!vis[neigh])
+            {
+                //count the no of nodes in the current subtree
+                int nodeCount = dfs(neigh, vis);
+            
+                // if no of nodes are even, we can easily delete the edge
+                if((nodeCount & 1) == 0)
+                    ans++;
+                
+                // else add the no of nodes in current subtree
+                else
+                    currCount += nodeCount;
+            }
+        }
+        
+        return currCount + 1; // 1 for the root node of current subtree
+    }
+}
