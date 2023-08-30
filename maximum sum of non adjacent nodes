@@ -1,0 +1,42 @@
+//Memoization is used
+class Solution
+{
+    //Function to return the maximum sum of non-adjacent nodes.
+    static int getMaxSum(Node root)
+    {
+        HashMap<Node,Integer> hm=new HashMap<>();
+        return solve(root,hm);
+    }
+    
+    static int solve(Node root,HashMap<Node,Integer> hm)
+    {
+        if(root==null)
+        return 0;
+        
+        if(hm.containsKey(root))
+        return hm.get(root);
+        
+        int including=0;
+        int excluding=0;
+        
+        including+=root.data;
+
+        if(root.left!=null)
+        
+        {
+            including+=solve(root.left.left,hm);
+            including+=solve(root.left.right,hm);
+        }
+        if(root.right!=null)
+        {
+            including+=solve(root.right.left,hm);
+            including+=solve(root.right.right,hm);
+        }
+        
+        excluding+=solve(root.left,hm);
+        excluding+=solve(root.right,hm);
+        
+        hm.put(root,Math.max(including,excluding));
+        return Math.max(including,excluding);
+    }
+}
