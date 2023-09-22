@@ -1,0 +1,67 @@
+class Solution
+{
+     private static void marktheparents(Node root, Map<TreeNode, TreeNode> parents_track, TreeNode target){
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            Node current = queue.poll();
+            
+            if(current.left != null){
+                parents_track.put(current.left, current);
+                queue.offer(current.left);
+            }
+            
+            if(current.right != null){
+                parents_track.put(current.right, current);
+                queue.offer(current.right);
+            }
+        }
+    }
+    
+    public static ArrayList<Integer> KDistanceNodes(Node root, int target , int k)
+    {
+        Map<TreeNode, TreeNode> parents_track = new HashMap<>();
+        marktheparents(root, parents_track);
+        Map<TreeNode, Boolean> visited = new HashMap<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        
+        queue.offer(target);
+        visited.put(target, true);
+        int curr_level = 0;
+        
+        while(!queue.isEmpty()){
+          
+            int size = queue.size();
+            if(curr_level == k) break;
+            curr_level++;
+            
+            for(int i=0; i<size; i++){
+                int temp;
+                Node current = temp;
+                temp = queue.poll();
+                
+                if(current.left != null && visited.get(current.left) == null){
+                queue.offer(current.left);
+                visited.put(current.left, true);
+                }
+                
+                if(current.right != null && visited.get(current.right) == null){
+                queue.offer(current.right);
+                visited.put(current.right, true);
+                }
+                
+                if(parent_track.get(current) != null && visited.get(parents_track.get(current)) == null){
+                queue.offer(parents_track.get(current));
+                visited.put(parents_track.get(current), true);
+               }
+            }
+        }
+        
+        ArrayList<TreeNode> result = new ArrayList<>();
+        while(!queue.isEmpty()){
+            Node current = queue.poll();
+            result.add(current.val);
+        }
+        return result;
+    }
+};
